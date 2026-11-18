@@ -6,45 +6,27 @@
 * Date: 2024-12-15
 * Github: https://github.com/oktat/
 * Licenc: MIT
+* Refaktorálta: Csorba Péter
 */
 
-//Itt következik a Store osztály
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 public class Store {
-    
-    /* 
-    A user adattag 
-    */
-    String a;
-    
-    /* 
-    A pass adattag 
-    */
-    String pass;
-    
-    /* 
-    A place adattag 
-    */
-    String place;
-    
-    //Konstruktor
-    public Store(String a, String pass, String place) {
-        //Előkészítjük az adattagokat
-        this.a = a;
-        this.pass = pass;
-        this.place = place;
-    }//A konstruktor vége
-    
-    //Visszaadja a jelszót
-    public String retrieval() {
-        return pass;
-    }//A retrieval vége
-    
-    //Visszaadja a helyet
-    public boolean hollow() {
-        if(this.pass == "") {
+    public static boolean saveContent(PasswordDto pass){
+        try {
+            trySaveContent(pass);
             return true;
-        }else {
+        } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
+    }
+    private static void trySaveContent(PasswordDto pass)throws IOException{
+        FileWriter filewriter = new FileWriter("pass.txt",Charset.forName("utf-8"),true);
+        String line = pass.username + ";" + pass.password + ";" + pass.place + "\n";
+        filewriter.write(line);
+        filewriter.close();
     }
 }
